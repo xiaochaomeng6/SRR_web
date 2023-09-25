@@ -1,0 +1,20 @@
+def addway(yuanshi,chuangjian):
+    with open(yuanshi, 'r') as f:#打开文件
+        seq = f.read().split()#
+        my_xuelie = []
+        my_list = []
+        my_dic = {}
+        j = 0
+        for i in seq:
+            if i[0] == '>':
+                j += 1
+                my_xuelie.append(j)#循环添加数
+            else:
+                my_list.append(i)
+            my_dic[j] = i
+        with open(chuangjian, 'w') as asd:
+            for a in my_xuelie:
+                asd.write(f'>{a}\n{my_dic[a]}\n')#添加换行符
+yuanshi = input('请输入要编辑的文件名：')
+chuangjian = input('请输入生成的文件名：')
+addway(yuanshi,chuangjian)
