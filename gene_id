@@ -1,0 +1,27 @@
+###需要两个初始文件：指定id号的txt文件；序列fasta文件
+###需要创建一个存储需要id序列的新文件
+def extract_seq(geneid, allseq, seq_need):
+    # 将基因id存放在列表中
+    with open(geneid, 'r') as f1:
+        geneid_list = f1.read().strip("\n").split("\n")  # 俩种方法的前后顺序不能反，因为split()后返回列表
+    # print(geneid_list)
+###将全部序列和id存放于字典中
+seqdict = {}
+allidlist = []
+with open(allseq, 'r') as infile:
+    for line in infile:
+        if line[0] == '>':
+            key = line.strip()
+            seqdict[key] = ''
+            allidlist.append(line[1:].strip())
+        elif len(line.strip()) > 0:
+            seqdict[key] += line  # 若为line.strip()，最后序列没有换行符为1行
+
+with open(seq_need, 'w') as outfile:
+    for eachid in geneid_list:
+        if eachid in allidlist:
+            outfile.write(f'>{eachid}\n{seqdict[">" + eachid]}')
+geneid = input('请输入所需ID的文件名：')
+allseq = input('请输入序列信息的文件名：')
+seq_need = input('请输入生成文件的文件名：')
+extract_seq(geneid, allseq, seq_need)
